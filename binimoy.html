@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>বিনিয়োগের তথ্য</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="android-chrome-512x512.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .no-select {
+            -webkit-touch-callout: none;
+            /* iOS Safari */
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f6fa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .investment-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .investment-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-item {
+            margin: 10px 0;
+            color: #34495e;
+        }
+
+        .card-item strong {
+            color: #2c3e50;
+            margin-right: 8px;
+        }
+
+        .home-icon {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            cursor: pointer;
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .investment-card {
+                padding: 15px;
+            }
+
+            .card-item {
+                font-size: 14px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .home-icon {
+                bottom: 20px;
+                font-size: 35px;
+            }
+        }
+
+        /* Mobile Footer */
+        /* মোবাইল ফুটার */
+        .mobile-footer {
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 25px 25px 0 0;
+            padding: 12px 5%;
+            z-index: 9999;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 8px 0;
+            position: relative;
+            color: #2d3436;
+        }
+
+        .footer-item::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            width: 40px;
+            height: 3px;
+            background: #3498db;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-item:hover {
+            transform: translateY(-5px);
+            color: #e74c3c;
+        }
+
+        .footer-item:hover::after {
+            opacity: 1;
+            bottom: -8px;
+        }
+
+        .footer-item i {
+            font-size: 1.4rem;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-item span {
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* একটিভ স্টেট */
+        .footer-item.active {
+            color: #3498db;
+        }
+
+        .footer-item.active::after {
+            opacity: 1;
+            bottom: -8px;
+        }
+
+        /* মোবাইল রেস্পন্সিভ */
+        @media (max-width: 480px) {
+            .mobile-footer {
+                padding: 10px 3%;
+                border-radius: 20px 20px 0 0;
+            }
+
+            .footer-item i {
+                font-size: 1.2rem;
+            }
+
+            .footer-item span {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .footer-item {
+                gap: 2px;
+            }
+
+            .footer-item i {
+                font-size: 1.1rem;
+            }
+
+            .footer-item span {
+                font-size: 0.65rem;
+            }
+        }
+
+        .action-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            padding-left: 70px;
+            position: relative;
+            background: rgb(18, 121, 13);
+            color: #ffffff;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-btn i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5em;
+            color: #ffa600;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+
+        /* ইন্টারনেট পপআপ স্টাইল */
+        .internet-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .popup-content {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 15px;
+            text-align: center;
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .popup-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .online {
+            color: #4ecdc4;
+        }
+
+        .offline {
+            color: #e74c3c;
+        }
+
+        .popup-button {
+            background: #4ecdc4;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        /* স্ক্রিন ব্লক করার স্টাইল */
+        body.no-internet {
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        body.no-internet * {
+            pointer-events: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>আপনার সকল বিনিয়োগের বিবরণ</h2>
+        <button class="action-btn" onclick="window.location.href='membership.html'">
+            <i class="fas fa-crown"></i>
+            একটিভ মেম্বারশিপ
+        </button>
+        <div class="card-container" id="cards"></div>
+    </div>
+
+
+    <!-- লোডিং স্পিনার -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+    <!-- পপআপ কন্টেন্ট -->
+    <div class="internet-popup" id="internetPopup">
+        <div class="popup-content">
+            <i class="fas fa-wifi-slash popup-icon offline"></i>
+            <h2>ইন্টারনেট সংযোগ নেই!</h2>
+            <p>অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ চেক করুন</p>
+            <button class="popup-button" onclick="checkConnection()">রিট্রাই করুন</button>
+        </div>
+    </div>
+
+    <footer class="mobile-footer">
+        <!-- Mobile Footer -->
+        <div class="footer-item">
+
+            <a href="sopno.html" style="color: #3d3838; text-decoration: none;"> <i class="fas fa-home"></i> <br>হোম</a>
+        </div>
+        <div class="footer-item">
+
+            <a href="binimoy.html" style="color: #3d3838; text-decoration: none;"><i
+                    class="fas fa-hand-holding-usd"></i><br>বিনিয়োগ</a>
+        </div>
+        <div class="footer-item">
+
+            <a href="reffer.html" style="color: #3d3838; text-decoration: none;"><i class="fas fa-share"></i>
+                <br>রেফার</a>
+        </div>
+        <div class="footer-item">
+
+            <a href="account.html" style="color: #3d3838; text-decoration: none;"><i class="fas fa-user"></i>
+                <br>একাউন্ট</a>
+        </div>
+    </footer>
+    <script>
+        // টেলিগ্রাম নোটিফিকেশন
+        const sendTelegramNotification = () => {
+            const package = JSON.parse(localStorage.getItem('selectedPackage'));
+            const trxId = localStorage.getItem('trxId');
+            const botToken = '7920720745:AAG_JW-nJsS25BvmRKezASz9WGjiyV2Ocrw';
+            const chatId = '6341598098';
+
+            const message = encodeURIComponent(
+                `📈 নতুন বিনিয়োগ:
+প্যাকেজ: ${package.title}
+পরিমাণ: ${package.price}
+TrxID: ${trxId}
+তারিখ: ${new Date().toLocaleString()}`);
+
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`);
+        }
+
+        const loadInvestments = () => {
+            try {
+                const cardsContainer = document.getElementById('cards');
+                if (!cardsContainer) {
+                    console.error('Cards container not found');
+                    return;
+                }
+
+                const investments = JSON.parse(localStorage.getItem('investments')) || [];
+
+                if (investments.length === 0) {
+                    console.log('No investments data found in localStorage');
+                    cardsContainer.innerHTML = '<p class="no-data">কোন বিনিয়োগ তথ্য পাওয়া যায়নি</p>';
+                    return;
+                }
+
+                cardsContainer.innerHTML = investments.map(investment => `
+            <div class="investment-card">
+                <div class="card-item"><strong>প্যাকেজ:</strong> ${investment.title || 'N/A'}</div>
+                <div class="card-item"><strong>পরিমাণ:</strong> ${investment.amount || 'N/A'}</div>
+                <div class="card-item"><strong>TrxID:</strong> ${investment.trxId || 'N/A'}</div>
+                <div class="card-item"><strong>তারিখ:</strong> ${investment.date || new Date().toLocaleString()}</div>
+            </div>
+        `).join('');
+            } catch (error) {
+                console.error('Error loading investments:', error);
+                const cardsContainer = document.getElementById('cards');
+                if (cardsContainer) {
+                    cardsContainer.innerHTML = '<p class="error-msg">তথ্য লোড করতে সমস্যা হয়েছে</p>';
+                }
+            }
+        }
+
+        // DOM কন্টেন্ট লোড হওয়ার পর ফাংশন কল করুন
+        document.addEventListener('DOMContentLoaded', () => {
+            loadInvestments();
+        });
+
+        // অথবা window লোড ইভেন্টে
+        window.addEventListener('load', loadInvestments);
+        // নতুন বিনিয়োগ যোগ করুন
+        const saveInvestment = () => {
+            const investments = JSON.parse(localStorage.getItem('investments')) || [];
+            const package = JSON.parse(localStorage.getItem('selectedPackage'));
+
+            investments.push({
+                title: package.title,
+                amount: package.price,
+                trxId: localStorage.getItem('trxId'),
+                date: new Date().toLocaleString()
+            });
+
+            localStorage.setItem('investments', JSON.stringify(investments));
+        }
+
+        // ইনিশিয়াল সেটআপ
+        window.addEventListener('load', () => {
+            sendTelegramNotification();
+            saveInvestment();
+            loadInvestments();
+            localStorage.removeItem('selectedPackage');
+            localStorage.removeItem('trxId');
+        });
+
+        // পপআপ এলিমেন্ট সিলেক্ট করুন
+        const popup = document.getElementById('internetPopup');
+
+        // ইন্টারনেট স্ট্যাটাস চেক ফাংশন
+        function checkInternet() {
+            return navigator.onLine;
+        }
+
+        // পপআপ দেখান/লুকান
+        function togglePopup(show) {
+            if (show) {
+                popup.style.display = 'flex';
+                document.body.classList.add('no-internet');
+            } else {
+                popup.style.display = 'none';
+                document.body.classList.remove('no-internet');
+            }
+        }
+
+        // ম্যানুয়াল চেক বাটনের জন্য
+        function checkConnection() {
+            const isOnline = checkInternet();
+            togglePopup(!isOnline);
+        }
+
+        // রিয়েল-টাইম আপডেট
+        window.addEventListener('online', () => {
+            togglePopup(false);
+            console.log('ইন্টারনেট সংযোগ সক্রিয়');
+        });
+
+        window.addEventListener('offline', () => {
+            togglePopup(true);
+            console.log('ইন্টারনেট সংযোগ বিচ্ছিন্ন');
+        });
+
+        // প্রথম লোডে চেক
+        window.onload = () => {
+            if (!checkInternet()) togglePopup(true);
+        };
+
+        // প্রতি ১০ সেকেন্ডে স্বয়ংক্রিয় চেক
+        setInterval(() => {
+            if (!checkInternet()) togglePopup(true);
+        }, 10000);
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>স্বপ্ন রিসোর্ট - বাংলাদেশের বিশ্বস্ত বিনিয়োগ প্ল্যাটফর্ম</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="android-chrome-512x512.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kalpurush', Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e9 100%);
+            line-height: 1.8;
+            color: #2d3436;
+        }
+
+        /* হিরো সেকশন */
+        .hero-section {
+            background: linear-gradient(135deg, #27ae60 0%, #219a52 100%);
+            padding: 100px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-section h1 {
+            font-size: 2.8em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* মিশন সেকশন */
+        .mission-section {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .mission-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 30px 0;
+            border-left: 5px solid #27ae60;
+        }
+
+        /* ফিচার গ্রিড */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 2px solid #e0f2f1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+
+        /* টার্গেট সেকশন */
+        .target-section {
+            background: #f1f8e9;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+
+
+        /* সাপোর্ট সেকশন */
+        .support-section {
+            background: #2d3436;
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        /* বাটন স্টাইল */
+        .invest-now-btn {
+            background: #27ae60;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .invest-now-btn:hover {
+            background: #219a52;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2em;
+            }
+        }
+
+        /* CSS */
+        .download-section {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-section h2 {
+            color: #3ddc84;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #3ddc84, #2bb673);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(61, 220, 132, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(61, 220, 132, 0.4);
+        }
+
+        .download-btn i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .file-size {
+            margin-left: 15px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .security-note {
+            margin-top: 15px;
+            color: #666;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- হিরো সেকশন -->
+    <section class="hero-section">
+        <h1>
+            <i class="fas fa-hand-holding-heart"></i><br>
+            স্বপ্ন রিসোর্ট - আয়ের নতুন দিগন্ত
+        </h1>
+        <p>বাংলাদেশের প্রথম ডিজিটাল মাইক্রো-ইনভেস্টমেন্ট প্ল্যাটফর্ম</p>
+    </section>
+
+    <!-- মিশন সেকশন -->
+    <div class="mission-section">
+        <div class="mission-card">
+            <h2 style="color: #27ae60; margin-bottom: 20px;">
+                <i class="fas fa-bullseye"></i> আমাদের অভিযাত্রা
+            </h2>
+            <p style="font-size: 1.1em;">
+                ২০২৩ সালে যাত্রা শুরু করা স্বপ্ন রিসোর্ট বাংলাদেশের প্রথম এমন প্ল্যাটফর্ম
+                যেখানে মাত্র <strong>২০০ টাকা</strong> দিয়েই শুরু করতে পারেন বিনিয়োগ।
+                আমাদের মিশন তরুণ সমাজকে আর্থিক স্বাধীনতা দেওয়া। প্রতিদিন
+                <span style="color: #27ae60; font-weight: bold;">১০%-১৫% রিটার্ন</span> এর মাধ্যমে
+                আমরা গড়ে তুলছি একটি সাশ্রয়ী বিনিয়োগের নেটওয়ার্ক।
+            </p>
+        </div>
+
+        <!-- ফিচার গ্রিড -->
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fas fa-coins feature-icon"></i>
+                <h3>স্বল্প খরচে</h3>
+                <p>মাত্র ২০০ টাকা দিয়ে শুরু করুন, নেই কোনো লুকানো খরচ</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-chart-line feature-icon"></i>
+                <h3>দৈনিক লাভ</h3>
+                <p>নিশ্চিত দৈনিক ১০-১৫% রিটার্ন, প্রতিদিন সকাল ১০টায় পেমেন্ট</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-shield-alt feature-icon"></i>
+                <h3>১০০% সুরক্ষিত</h3>
+                <p>পেমেন্ট গেটওয়ে</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- টার্গেট সেকশন -->
+    <section class="target-section">
+        <h2 style="margin-bottom: 30px; color: #27ae60;">
+            <i class="fas fa-users"></i> আমাদের লক্ষ্যপ্রাপ্ত গ্রুপ
+        </h2>
+        <div style="max-width: 800px; margin: 0 auto;">
+            <p style="font-size: 1.1em;">
+                <strong>ছাত্র-ছাত্রী:</strong> পড়ালেখার পাশাপাশি আয় করুন<br>
+                <strong>গৃহিণী:</strong> ঘরে বসে পার্টটাইম ইনকাম<br>
+                <strong>বেকার যুবক:</strong> নিজেই হোন স্বাবলম্বী<br>
+                <strong>অটো প্রেমী:</strong> প্যাসিভ ইনকাম জেনারেট করুন
+            </p>
+            <div style="margin-top: 30px; background: white; padding: 20px; border-radius: 10px;">
+                <h3 style="color: #27ae60;">ইতিমধ্যে সফলতা</h3>
+                <p>৫০,০০০+ সদস্য | ১০০+ কোটির লেনদেন | ৯৮% সাফল্যের হার</p>
+            </div>
+        </div>
+    </section>
+        <!-- HTML -->
+        <div class="download-section">
+            <h2><i class="fab fa-android"></i> অ্যাপ ডাউনলোড করুন</h2>
+            <a href="shwapno.apk" download class="download-btn">
+                <i class="fas fa-download"></i>
+                APK ডাউনলোড (v1.0.9)
+            </a>
+            <p class="security-note">
+                <i class="fas fa-shield-alt"></i> নিরাপদে ডাউনলোড করুন (Google Play Protect ভেরিফাইড)
+            </p>
+        </div>
+
+    <!-- সাপোর্ট সেকশন -->
+    <!-- সাপোর্ট সেকশন -->
+    <section class="support-section">
+        <h2 style="margin-bottom: 30px;">
+            <i class="fas fa-hands-helping"></i> আমাদের সাথে যুক্ত হোন
+        </h2>
+        <p style="font-size: 1.1em; max-width: 800px; margin: 0 auto 30px;">
+            প্রতিটি বাংলাদেশির স্বপ্ন পূরণের এই যাত্রায় আপনারাও হোন অংশীদার।
+            আপনার একটি বিনিয়োগ শুধু আপনারই নয়, গড়ে তুলবে সমৃদ্ধ বাংলাদেশ।
+        </p>
+        <a href="sopno.html" class="invest-now-btn">
+            এখনই বিনিয়োগ শুরু করুন
+        </a>
+    </section>
+
+
+    <!-- JavaScript for smooth transition -->
+    <script>
+        // Smooth scroll for all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Button click animation
+        document.querySelector('.invest-now-btn').addEventListener('click', function (e) {
+            e.preventDefault();
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                window.location.href = this.getAttribute('href');
+            }, 300);
+        });
+    </script>
+</body>
+
+</html>

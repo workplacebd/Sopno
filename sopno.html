@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>স্বপ্ন রিসোর্ট - বিনিয়োগ প্ল্যাটফর্ম</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="android-chrome-512x512.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .no-select {
+            -webkit-touch-callout: none;
+            /* iOS Safari */
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* নেভবার স্টাইল */
+        .navbar {
+            background: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        /* CSS স্টাইলিং */
+        .balance {
+            position: static;
+            top: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .balance:hover {
+            transform: scale(1.05);
+            background: #219a52;
+        }
+
+        .welcome-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .envelope {
+            background: #fff;
+            width: 90%;
+            max-width: 400px;
+            padding: 40px;
+            border-radius: 15px;
+            position: relative;
+            animation: popIn 0.6s ease;
+        }
+
+        .flap {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 30px solid #e74c3c;
+        }
+
+        .amount {
+            font-size: 48px;
+            color: #27ae60;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        /* হিরো সেকশন */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('https://images.unsplash.com/photo-1566073771259-6a8506099945') center/cover;
+            background-size: cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-button {
+            background: #2ecc71;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+        }
+
+        /* ইনভেস্টমেন্ট কার্ড */
+        .investment-section {
+            padding: 4rem 2rem;
+            background: #f9f9f9;
+        }
+
+        .investment-cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 25px;
+        }
+
+        .investment-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid;
+            transition: transform 0.3s ease;
+        }
+
+        /* কার্ড কালার স্টাইল */
+        .silver {
+            border-color: #c0c0c0;
+        }
+
+        .gold {
+            border-color: #ffd700;
+        }
+
+        .platinum {
+            border-color: #e5e4e2;
+        }
+
+        .diamond {
+            border-color: #4bcbe8;
+        }
+
+        .vip {
+            border-color: #9b59b6;
+        }
+
+        .exclusive {
+            border-color: #2c3e50;
+        }
+
+        .premium {
+            border-color: #e67e22;
+        }
+
+        .investment-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .investment-card h3 {
+            color: inherit;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+
+        .price {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 15px 0;
+            color: #27ae60;
+        }
+
+        .invest-button {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .invest-button i {
+            font-size: 1.2em;
+        }
+
+        .invest-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        /* মোবাইল রেস্পন্সিভ */
+        @media (max-width: 768px) {
+            .investment-cards-container {
+                grid-template-columns: 1fr;
+                padding: 15px;
+                gap: 20px;
+            }
+
+            .investment-card {
+                padding: 20px;
+            }
+        }
+
+
+
+        /* Mobile Footer */
+        /* মোবাইল ফুটার */
+        .mobile-footer {
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 25px 25px 0 0;
+            padding: 12px 5%;
+            z-index: 9999;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 8px 0;
+            position: relative;
+            color: #2d3436;
+        }
+
+        .footer-item::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            width: 40px;
+            height: 3px;
+            background: #3498db;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-item:hover {
+            transform: translateY(-5px);
+            color: #e74c3c;
+        }
+
+        .footer-item:hover::after {
+            opacity: 1;
+            bottom: -8px;
+        }
+
+        .footer-item i {
+            font-size: 1.4rem;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-item span {
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* একটিভ স্টেট */
+        .footer-item.active {
+            color: #3498db;
+        }
+
+        .footer-item.active::after {
+            opacity: 1;
+            bottom: -8px;
+        }
+
+        /* মোবাইল রেস্পন্সিভ */
+        @media (max-width: 480px) {
+            .mobile-footer {
+                padding: 10px 3%;
+                border-radius: 20px 20px 0 0;
+            }
+
+            .footer-item i {
+                font-size: 1.2rem;
+            }
+
+            .footer-item span {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .footer-item {
+                gap: 2px;
+            }
+
+            .footer-item i {
+                font-size: 1.1rem;
+            }
+
+            .footer-item span {
+                font-size: 0.65rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-footer {
+                display: flex;
+            }
+
+            .investments {
+                grid-template-columns: 1fr;
+                margin-bottom: 70px;
+            }
+        }
+
+        /* রেস্পন্সিভ ডিজাইন */
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                padding: 1rem;
+            }
+        }
+
+
+
+
+
+        /* Welcome Popup Styles */
+        #welcomePopup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .popup-content {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: scale(0.9);
+            animation: popIn 0.5s forwards;
+            position: relative;
+        }
+
+        .popup-header {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .popup-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .popup-body {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .bonus-amount {
+            font-size: 48px;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin: 20px 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        .bonus-amount::after {
+            content: "টাকা";
+            font-size: 20px;
+            position: absolute;
+            bottom: -15px;
+            right: -40px;
+            color: #333;
+        }
+
+        .popup-text {
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .claim-btn {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 105, 105, 0.3);
+            width: 100%;
+            max-width: 250px;
+            margin: 0 auto;
+        }
+
+        .claim-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 105, 105, 0.4);
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f8d56b;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ইন্টারনেট পপআপ স্টাইল */
+        .internet-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .popup-content {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 15px;
+            text-align: center;
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .popup-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .online {
+            color: #4ecdc4;
+        }
+
+        .offline {
+            color: #e74c3c;
+        }
+
+        .popup-button {
+            background: #4ecdc4;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        /* স্ক্রিন ব্লক করার স্টাইল */
+        body.no-internet {
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        body.no-internet * {
+            pointer-events: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- নেভবার -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo.png" alt="স্বপ্ন">
+            <h2>স্বপ্ন রিসোর্ট</h2>
+        </div>
+        <div class="balance" onclick="window.location.href='account.html'">
+            ব্যালেন্স: ৳<span id="balanceAmount">0.00</span>
+        </div>
+    </nav>
+
+    <!-- হিরো সেকশন -->
+    <section class="hero">
+        <h1>বিনিয়োগ করুন স্বপ্ন রিসোর্ট প্রজেক্টে</h1>
+        <a href="about.html" class="cta-button">আমাদের সম্পর্কে জানুন</a>
+    </section>
+
+    <!-- ইনভেস্টমেন্ট কার্ড -->
+    <section class="investment-cards-container">
+        <!-- সিলভার মেম্বার -->
+        <div class="investment-card silver">
+            <h3>সিলভার মেম্বার</h3>
+            <div class="price">৳200</div>
+            <p><i class="fas fa-coins"></i> দৈনিক লাভ: ৳40</p>
+            <p><i class="fas fa-hourglass-half"></i> মেয়াদ ৩০ দিন</p>
+            <p><i class="fas fa-piggy-bank"></i> মোট লাভ: ৳1,200</p>
+            <button class="invest-button"><i class="fas fa-gem"></i> বিনিয়োগ করুন</button>
+        </div>
+
+        <!-- গোল্ড মেম্বার -->
+        <div class="investment-card gold">
+            <h3>গোল্ড মেম্বার</h3>
+            <div class="price">৳500</div>
+            <p><i class="fas fa-coins"></i> দৈনিক লাভ: ৳100</p>
+            <p><i class="fas fa-hourglass-half"></i> মেয়াদ ৩০ দিন</p>
+            <p><i class="fas fa-piggy-bank"></i> মোট লাভ: ৳3,000</p>
+            <button class="invest-button"><i class="fas fa-medal"></i> বিনিয়োগ করুন</button>
+        </div>
+
+        <!-- প্লাটিনাম মেম্বার -->
+        <div class="investment-card platinum">
+            <h3>প্লাটিনাম মেম্বার</h3>
+            <div class="price">৳1,000</div>
+            <p><i class="fas fa-coins"></i> দৈনিক লাভ: ৳200</p>
+            <p><i class="fas fa-hourglass-half"></i> মেয়াদ ৩০ দিন</p>
+            <p><i class="fas fa-piggy-bank"></i> মোট লাভ: ৳6,000</p>
+            <button class="invest-button"><i class="fas fa-crown"></i> বিনিয়োগ করুন</button>
+        </div>
+
+        <!-- ডায়মন্ড মেম্বার -->
+        <div class="investment-card diamond">
+            <h3>ডায়মন্ড মেম্বার</h3>
+            <div class="price">৳2,000</div>
+            <p><i class="fas fa-coins"></i> দৈনিক লাভ: ৳400</p>
+            <p><i class="fas fa-hourglass-half"></i> মেয়াদ ৩০ দিন</p>
+            <p><i class="fas fa-piggy-bank"></i> মোট লাভ: ৳12,000</p>
+            <button class="invest-button"><i class="fas fa-gem"></i> বিনিয়োগ করুন</button>
+        </div>
+
+        <!-- ভিআইপি মেম্বার -->
+        <div class="investment-card vip">
+            <h3>ভিআইপি মেম্বার</h3>
+            <div class="price">৳5,000</div>
+            <p><i class="fas fa-coins"></i> দৈনিক লাভ: ৳1,000</p>
+            <p><i class="fas fa-hourglass-half"></i> মেয়াদ ৩০ দিন</p>
+            <p><i class="fas fa-piggy-bank"></i> মোট লাভ: ৳30,000</p>
+            <button class="invest-button"><i class="fas fa-star"></i> বিনিয়োগ করুন</button>
+        </div>
+
+        <!-- এক্সক্লুসিভ মেম্বার -->
+        <div class="investment-card exclusive">
+            <h3>এক্সক্লুসিভ মেম্বার</h3>
+            <div class="price">৳10,000</div>
+            <p><i class="fas fa-coins"></i> দৈনিক লাভ: ৳2,000</p>
+            <p><i class="fas fa-hourglass-half"></i> মেয়াদ ৩০ দিন</p>
+            <p><i class="fas fa-piggy-bank"></i> মোট লাভ: ৳60,000</p>
+            <button class="invest-button"><i class="fas fa-rocket"></i> বিনিয়োগ করুন</button>
+        </div>
+
+        <!-- প্রিমিয়াম মেম্বার -->
+        <div class="investment-card premium">
+            <h3>প্রিমিয়াম মেম্বার</h3>
+            <div class="price">৳20,000</div>
+            <p><i class="fas fa-coins"></i> দৈনিক লাভ: ৳4,000</p>
+            <p><i class="fas fa-hourglass-half"></i> মেয়াদ ৩০ দিন</p>
+            <p><i class="fas fa-piggy-bank"></i> মোট লাভ: ৳120,000</p>
+            <button class="invest-button"><i class="fas fa-trophy"></i> বিনিয়োগ করুন</button>
+        </div>
+        <br><br><br><br>
+    </section>
+
+
+    <!-- Welcome Bonus Popup -->
+    <div id="welcomePopup">
+        <div class="popup-content">
+            <div class="popup-header">
+                <button class="close-btn" onclick="closePopup()">×</button>
+                <h2>স্বাগতম বোনাস!</h2>
+                <p>আপনি নতুন ব্যবহারকারী হিসাবে পাচ্ছেন</p>
+            </div>
+            <div class="popup-body">
+                <div class="bonus-amount">২৫০</div>
+                <p class="popup-text">এক্কেবারে ফ্রি! ক্লিক করুন এবং আপনার অ্যাকাউন্টে ২৫০ টাকা বোনাস পান এখনই</p>
+                <button class="claim-btn" onclick="claimBonus()">
+                    <i class="fas fa-gift"></i> বোনাস নিন
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- পপআপ কন্টেন্ট -->
+    <div class="internet-popup" id="internetPopup">
+        <div class="popup-content">
+            <i class="fas fa-wifi-slash popup-icon offline"></i>
+            <h2>ইন্টারনেট সংযোগ নেই!</h2>
+            <p>অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ চেক করুন</p>
+            <button class="popup-button" onclick="checkConnection()">রিট্রাই করুন</button>
+        </div>
+    </div>
+
+
+
+    <!-- লোডিং স্পিনার -->
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <footer class="mobile-footer">
+        <!-- Mobile Footer -->
+        <div class="footer-item">
+
+            <a href="sopno.html" style="color: #3d3838; text-decoration: none;"> <i class="fas fa-home"></i> <br>হোম</a>
+        </div>
+        <div class="footer-item">
+
+            <a href="binimoy.html" style="color: #3d3838; text-decoration: none;"><i
+                    class="fas fa-hand-holding-usd"></i><br>বিনিয়োগ</a>
+        </div>
+        <div class="footer-item">
+
+            <a href="reffer.html" style="color: #3d3838; text-decoration: none;"><i class="fas fa-share"></i>
+                <br>রেফার</a>
+        </div>
+        <div class="footer-item">
+
+            <a href="account.html" style="color: #3d3838; text-decoration: none;"><i class="fas fa-user"></i>
+                <br>একাউন্ট</a>
+        </div>
+    </footer>
+    <script>
+        // Button Click Handler
+        document.querySelectorAll('.invest-button').forEach(button => {
+            button.addEventListener('click', function () {
+                const card = this.closest('.investment-card');
+                const packageDetails = {
+                    title: card.querySelector('h3').innerText,
+                    price: card.querySelector('.price').innerText,
+                    daily: card.querySelector('p:nth-child(3)').innerText,
+                    total: card.querySelector('p:nth-child(4)').innerText
+                };
+
+                // Store data temporarily
+                localStorage.setItem('selectedPackage', JSON.stringify(packageDetails));
+
+                // Redirect to payment page
+                window.location.href = 'payment.html';
+            });
+        });
+        // JavaScript লজিক
+        // নতুন ইউজার চেক
+        function isNewUser() {
+            return !localStorage.getItem('welcomeBonusClaimed');
+        }
+
+        // ব্যালেন্স আপডেট
+        function updateBalance(amount) {
+            const currentBalance = parseFloat(localStorage.getItem('userBalance')) || 0;
+            const newBalance = currentBalance + amount;
+            localStorage.setItem('userBalance', newBalance.toFixed(2));
+            document.getElementById('balanceAmount').textContent = newBalance.toFixed(2);
+            createConfetti();
+        }
+
+        // পপআপ বন্ধ করা
+        function closePopup() {
+            document.getElementById('welcomePopup').style.display = 'none';
+            localStorage.setItem('welcomeBonusClaimed', 'true');
+        }
+
+        // বোনাস ক্লেম
+        function claimBonus() {
+            updateBalance(250);
+            localStorage.setItem('welcomeBonusClaimed', 'true');
+            document.getElementById('welcomePopup').style.display = 'none';
+        }
+
+        // কনফেটি এফেক্ট
+        function createConfetti() {
+            const colors = ['#ff9a9e', '#fad0c4', '#f8d56b', '#a18cd1', '#84fab0'];
+
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -10 + 'px';
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+                document.body.appendChild(confetti);
+
+                const animationDuration = Math.random() * 3 + 2;
+
+                confetti.style.animation = `fall ${animationDuration}s linear forwards`;
+
+                // Create keyframes dynamically
+                const keyframes = `
+                    @keyframes fall {
+                        to {
+                            transform: translateY(100vh) rotate(${Math.random() * 360}deg);
+                            opacity: 0;
+                        }
+                    }
+                `;
+
+                const style = document.createElement('style');
+                style.innerHTML = keyframes;
+                document.head.appendChild(style);
+
+                setTimeout(() => {
+                    confetti.remove();
+                    style.remove();
+                }, animationDuration * 1000);
+            }
+        }
+
+        // পেজ লোড হওয়ার সময়
+        window.addEventListener('load', () => {
+            // ব্যালেন্স লোড
+            const savedBalance = localStorage.getItem('userBalance');
+            if (savedBalance) {
+                document.getElementById('balanceAmount').textContent = parseFloat(savedBalance).toFixed(2);
+            }
+
+            // নতুন ইউজার হলে পপআপ দেখাও
+            if (isNewUser()) {
+                setTimeout(() => {
+                    document.getElementById('welcomePopup').style.display = 'flex';
+                }, 1000);
+            }
+        });
+
+        // পপআপ এলিমেন্ট সিলেক্ট করুন
+        const popup = document.getElementById('internetPopup');
+
+        // ইন্টারনেট স্ট্যাটাস চেক ফাংশন
+        function checkInternet() {
+            return navigator.onLine;
+        }
+
+        // পপআপ দেখান/লুকান
+        function togglePopup(show) {
+            if (show) {
+                popup.style.display = 'flex';
+                document.body.classList.add('no-internet');
+            } else {
+                popup.style.display = 'none';
+                document.body.classList.remove('no-internet');
+            }
+        }
+
+        // ম্যানুয়াল চেক বাটনের জন্য
+        function checkConnection() {
+            const isOnline = checkInternet();
+            togglePopup(!isOnline);
+        }
+
+        // রিয়েল-টাইম আপডেট
+        window.addEventListener('online', () => {
+            togglePopup(false);
+            console.log('ইন্টারনেট সংযোগ সক্রিয়');
+        });
+
+        window.addEventListener('offline', () => {
+            togglePopup(true);
+            console.log('ইন্টারনেট সংযোগ বিচ্ছিন্ন');
+        });
+
+        // প্রথম লোডে চেক
+        window.onload = () => {
+            if (!checkInternet()) togglePopup(true);
+        };
+
+        // প্রতি ১০ সেকেন্ডে স্বয়ংক্রিয় চেক
+        setInterval(() => {
+            if (!checkInternet()) togglePopup(true);
+        }, 10000);
+    </script>
+    <script src="script.js"></script>
+    <script src="https://kit.fontawesome.com/your-kit-code.js"></script>
+</body>
+
+</html>

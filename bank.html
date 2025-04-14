@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ব্যাংক কার্ড ম্যানেজমেন্ট</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="android-chrome-512x512.png">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .no-select {
+            -webkit-touch-callout: none;
+            /* iOS Safari */
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px;
+        }
+
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 380px;
+            height: 220px;
+            border-radius: 15px;
+            padding: 25px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-1 {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+        }
+
+        .card-2 {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            right: -30%;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .card-type {
+            font-size: 29px;
+            opacity: 0.8;
+        }
+
+        .card-logo {
+            font-size: 24px;
+        }
+
+        .card-number {
+            font-size: 30px;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+            word-spacing: 6px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card-holder {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .card-name {
+            font-size: 26px;
+            margin-top: 5px;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s ease;
+        }
+
+        select:focus,
+        input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .save-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .save-btn:hover {
+            background: #219653;
+            transform: translateY(-2px);
+        }
+
+        .save-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            color: #7f8c8d;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            color: #3498db;
+            border-bottom: 3px solid #3498db;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+
+
+        /* ইন্টারনেট পপআপ স্টাইল */
+        .internet-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .popup-content {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 15px;
+            text-align: center;
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .popup-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .online {
+            color: #4ecdc4;
+        }
+
+        .offline {
+            color: #e74c3c;
+        }
+
+        .popup-button {
+            background: #4ecdc4;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        /* স্ক্রিন ব্লক করার স্টাইল */
+        body.no-internet {
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        body.no-internet * {
+            pointer-events: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1><i class="fas fa-credit-card"></i> ব্যাংক কার্ড ম্যানেজমেন্ট</h1>
+
+        <div class="cards-container">
+            <div class="card card-1" id="card1">
+                <div class="card-header">
+                    <div class="card-type" id="card1Type">কার্ড ১</div>
+                    <div class="card-logo">
+                        <i class="far fa-credit-card"></i>
+                    </div>
+                </div>
+                <div class="card-number" id="card1Number">XXX XXXX XXXX</div>
+                <div class="card-details">
+                    <div class="card-holder">
+                        <div>কার্ড হোল্ডার</div>
+                        <div class="card-name" id="card1Name">নাম</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-2" id="card2">
+                <div class="card-header">
+                    <div class="card-type" id="card2Type">কার্ড ২</div>
+                    <div class="card-logo">
+                        <i class="far fa-credit-card"></i>
+                    </div>
+                </div>
+                <div class="card-number" id="card2Number">XXX XXXX XXXX </div>
+                <div class="card-details">
+                    <div class="card-holder">
+                        <div>কার্ড হোল্ডার</div>
+                        <div class="card-name" id="card2Name">নাম</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab(1)">কার্ড ১ সেটিংস</div>
+            <div class="tab" onclick="switchTab(2)">কার্ড ২ সেটিংস</div>
+        </div>
+
+        <div class="form-container">
+            <div class="tab-content active" id="tab1">
+                <div class="form-group">
+                    <label for="card1Holder">আপনার নাম </label>
+                    <input type="text" id="card1Holder" placeholder="পুরো নাম লিখুন">
+                </div>
+                <div class="form-group">
+                    <label for="card1Method">পেমেন্ট মেথড</label>
+                    <select id="card1Method">
+                        <option value="বিকাশ">বিকাশ</option>
+                        <option value="নগদ">নগদ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="card1NumberInput">কার্ড/অ্যাকাউন্ট নম্বর</label>
+                    <input type="text" id="card1NumberInput" placeholder="নম্বর লিখুন" maxlength="16">
+                </div>
+                <button class="save-btn" onclick="saveCard(1)">
+                    <i class="fas fa-save"></i> কার্ড ১ সেভ করুন
+                </button>
+            </div>
+
+            <div class="tab-content" id="tab2">
+                <div class="form-group">
+                    <label for="card2Holder">আপনার নাম</label>
+                    <input type="text" id="card2Holder" placeholder="পুরো নাম লিখুন">
+                </div>
+                <div class="form-group">
+                    <label for="card2Method">পেমেন্ট মেথড</label>
+                    <select id="card2Method">
+                        <option value="বিকাশ">বিকাশ</option>
+                        <option value="নগদ">নগদ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="card2NumberInput">কার্ড/অ্যাকাউন্ট নম্বর</label>
+                    <input type="text" id="card2NumberInput" placeholder="নম্বর লিখুন" maxlength="16">
+                </div>
+                <button class="save-btn" onclick="saveCard(2)">
+                    <i class="fas fa-save"></i> কার্ড ২ সেভ করুন
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- পপআপ কন্টেন্ট -->
+    <div class="internet-popup" id="internetPopup">
+        <div class="popup-content">
+            <i class="fas fa-wifi-slash popup-icon offline"></i>
+            <h2>ইন্টারনেট সংযোগ নেই!</h2>
+            <p>অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ চেক করুন</p>
+            <button class="popup-button" onclick="checkConnection()">রিট্রাই করুন</button>
+        </div>
+    </div>
+
+    <script>
+        // কার্ড ডেটা লোড করা
+        function loadCards() {
+            const card1Data = JSON.parse(localStorage.getItem('card1Data'));
+            const card2Data = JSON.parse(localStorage.getItem('card2Data'));
+
+            if (card1Data) {
+                document.getElementById('card1Name').textContent = card1Data.holder;
+                document.getElementById('card1Number').textContent = formatCardNumber(card1Data.number);
+                document.getElementById('card1Type').textContent = card1Data.method;
+                document.getElementById('card1Holder').value = card1Data.holder;
+                document.getElementById('card1Method').value = card1Data.method;
+                document.getElementById('card1NumberInput').value = card1Data.number;
+            }
+
+            if (card2Data) {
+                document.getElementById('card2Name').textContent = card2Data.holder;
+                document.getElementById('card2Number').textContent = formatCardNumber(card2Data.number);
+                document.getElementById('card2Type').textContent = card2Data.method;
+                document.getElementById('card2Holder').value = card2Data.holder;
+                document.getElementById('card2Method').value = card2Data.method;
+                document.getElementById('card2NumberInput').value = card2Data.number;
+            }
+        }
+
+        // কার্ড নম্বর ফরম্যাট করা (XXXX XXXX XXXX XXXX)
+        function formatCardNumber(number) {
+            if (!number) return 'XXX XXXX XXXX XXXX';
+            return number.replace(/(\d{3})(?=\d)/g, '$1 ');
+        }
+
+        // ট্যাব সুইচ করা
+        function switchTab(tabNumber) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            document.querySelector(`.tab:nth-child(${tabNumber})`).classList.add('active');
+            document.getElementById(`tab${tabNumber}`).classList.add('active');
+        }
+
+        // কার্ড সেভ করা
+        function saveCard(cardNumber) {
+            const holder = document.getElementById(`card${cardNumber}Holder`).value.trim();
+            const method = document.getElementById(`card${cardNumber}Method`).value;
+            const number = document.getElementById(`card${cardNumber}NumberInput`).value.trim();
+
+            if (!holder || !number) {
+                alert('অনুগ্রহ করে সব তথ্য পূরণ করুন');
+                return;
+            }
+
+            if (!/^\d+$/.test(number)) {
+                alert('শুধুমাত্র সংখ্যা লিখুন');
+                return;
+            }
+
+            const cardData = {
+                holder,
+                method,
+                number
+            };
+
+            localStorage.setItem(`card${cardNumber}Data`, JSON.stringify(cardData));
+
+            // UI আপডেট
+            document.getElementById(`card${cardNumber}Name`).textContent = holder;
+            document.getElementById(`card${cardNumber}Number`).textContent = formatCardNumber(number);
+            document.getElementById(`card${cardNumber}Type`).textContent = method;
+
+            alert(`কার্ড ${cardNumber} সফলভাবে সেভ করা হয়েছে!`);
+        }
+
+        // পেজ লোড হওয়ার সময় কার্ড ডেটা লোড করা
+        window.onload = loadCards;
+
+
+        
+    </script>
+</body>
+
+</html>
