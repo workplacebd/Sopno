@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>একটিভ মেম্বারশিপ</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="android-chrome-512x512.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, #cebd27, #3618dd);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .balance-amount {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+
+        .membership-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .membership-card.active {
+            background: linear-gradient(135deg, #4fd1c5 0%, #4299e1 100%);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .card-icon {
+            font-size: 32px;
+        }
+
+        .card-content {
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .card-benefits {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .card-benefits li {
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .claim-btn {
+            background: #fff;
+            color: #4299e1;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .claim-btn:disabled {
+            background: #e2e8f0;
+            color: #a0aec0;
+            cursor: not-allowed;
+        }
+
+        
+         /* মোবাইল ফুটার */
+         .mobile-footer {
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 25px 25px 0 0;
+            padding: 12px 5%;
+            z-index: 9999;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 8px 0;
+            position: relative;
+            color: #2d3436;
+        }
+
+        .footer-item::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            width: 40px;
+            height: 3px;
+            background: #3498db;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-item:hover {
+            transform: translateY(-5px);
+            color: #e74c3c;
+        }
+
+        .footer-item:hover::after {
+            opacity: 1;
+            bottom: -8px;
+        }
+
+        .footer-item i {
+            font-size: 1.4rem;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-item span {
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* একটিভ স্টেট */
+        .footer-item.active {
+            color: #3498db;
+        }
+
+        .footer-item.active::after {
+            opacity: 1;
+            bottom: -8px;
+        }
+
+        /* মোবাইল রেস্পন্সিভ */
+        @media (max-width: 480px) {
+            .mobile-footer {
+                padding: 10px 3%;
+                border-radius: 20px 20px 0 0;
+            }
+
+            .footer-item i {
+                font-size: 1.2rem;
+            }
+
+            .footer-item span {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .footer-item {
+                gap: 2px;
+            }
+
+            .footer-item i {
+                font-size: 1.1rem;
+            }
+
+            .footer-item span {
+                font-size: 0.65rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="balance-card">
+        <div><i class="fas fa-crown"></i> আমার মেম্বারশিপ</div>
+       
+    </div>
+
+    <div class="membership-card" id="membershipCard">
+        <div class="card-header">
+            <i class="fas fa-gem card-icon"></i>
+            <div class="card-status">ফ্রি মেম্বারশিপ</div>
+        </div>
+        <div class="card-content">
+            <h2 class="card-title">বিশেষ সুবিধা পান!</h2>
+            <ul class="card-benefits">
+                <li><i class="fas fa-clock"></i>প্রতি 24 ঘন্টায় ৳20</li>
+                <li><i class="fas fa-coins"></i>প্রতি 20 সেকেন্ডে ৳0.10</li>
+                <li><i class="fas fa-infinity"></i>24/7 আয় চলমান</li>
+            </ul>
+            <button class="claim-btn" id="claimBtn" onclick="claimMembership()">ক্লেম করুন</button>
+        </div>
+    </div>
+    <footer class="mobile-footer">
+        <!-- Mobile Footer -->
+        <div class="footer-item">
+           
+            <a href="sopno.html" style="color: #3d3838; text-decoration: none;"> <i class="fas fa-home"></i> <br>হোম</a>
+        </div>
+        <div class="footer-item">
+            
+            <a href="binimoy.html" style="color: #3d3838; text-decoration: none;"><i class="fas fa-hand-holding-usd"></i><br>বিনিয়োগ</a>
+        </div>
+        <div class="footer-item">
+            
+            <a href="reffer.html" style="color: #3d3838; text-decoration: none;"><i class="fas fa-share"></i> <br>রেফার</a>
+        </div>
+        <div class="footer-item">
+            
+            <a href="account.html" style="color: #3d3838; text-decoration: none;"><i class="fas fa-user"></i> <br>একাউন্ট</a>
+        </div>
+    </footer>
+
+<script>
+        // LocalStorage ডেটা ইনিশিয়ালাইজেশন
+        let userData = JSON.parse(localStorage.getItem('userData')) || {
+            balance: 0,
+            isMember: false,
+            lastUpdate: Date.now(),
+            lastDailyBonus: null // নতুন প্রপার্টি যোগ করা হয়েছে
+        };
+
+        // ব্যালেন্স আপডেট ফাংশন
+        function updateBalance() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentMinutes = now.getMinutes();
+            
+            // প্রতিদিন ১২ PM এ ২০ টাকা যোগ করা
+            if(userData.isMember && currentHour === 12 && currentMinutes === 0) {
+                const today = new Date().toDateString();
+                
+                // চেক করুন যে আজকে বোনাস দেওয়া হয়েছে কিনা
+                if(userData.lastDailyBonus !== today) {
+                    userData.balance += 20;
+                    userData.lastDailyBonus = today;
+                    alert('আপনার দৈনিক ২০ টাকা বোনাস যোগ করা হয়েছে!');
+                }
+            }
+
+            // ডেটা আপডেট
+            userData.lastUpdate = Date.now();
+            localStorage.setItem('userData', JSON.stringify(userData));
+            document.getElementById('mainBalance').textContent = userData.balance.toFixed(2);
+            
+            // মূল ব্যালেন্সে সিঙ্ক করুন
+            const mainBalance = parseFloat(localStorage.getItem('userBalance') || 0);
+            localStorage.setItem('userBalance', (mainBalance + userData.balance).toFixed(2));
+        }
+
+        // মেম্বারশিপ ক্লেইম ফাংশন
+        function claimMembership() {
+            if(!userData.isMember) {
+                userData.isMember = true;
+                userData.lastUpdate = Date.now();
+                
+                // UI আপডেট
+                document.getElementById('membershipCard').classList.add('active');
+                document.getElementById('claimBtn').disabled = true;
+                document.getElementById('claimBtn').textContent = "একটিভ করা হয়েছে";
+                
+                // লোকালস্টোরেজ আপডেট
+                localStorage.setItem('userData', JSON.stringify(userData));
+                alert('মেম্বারশিপ সফলভাবে সক্রিয় হয়েছে!');
+                
+                // রিয়েল-টাইম আপডেট শুরু করুন
+                startRealTimeUpdates();
+            }
+        }
+
+        // রিয়েল-টাইম আপডেট সিস্টেম
+        function startRealTimeUpdates() {
+            // প্রতি মিনিটে চেক করবে ১২ PM হয়েছে কিনা
+            setInterval(() => {
+                updateBalance();
+            }, 60000); // 1 মিনিট = 60000 মিলিসেকেন্ড
+        }
+        // পেজ লোড হওয়ার পর
+        window.onload = () => {
+            // প্রাথমিক আপডেট
+           
+            
+            // যদি আগে থেকেই একটিভ থাকে
+            if(userData.isMember) {
+                document.getElementById('membershipCard').classList.add('active');
+                document.getElementById('claimBtn').disabled = true;
+                document.getElementById('claimBtn').textContent = "একটিভ করা হয়েছে";
+                startRealTimeUpdates();
+            }
+        };
+
+
+    </script>
+</body>
+</html>
